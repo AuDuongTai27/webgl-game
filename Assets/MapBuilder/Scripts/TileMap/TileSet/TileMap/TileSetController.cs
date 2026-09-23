@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,8 +35,6 @@ public class TileSetController : MonoBehaviour
 
     void InitListener()
     {
-        EnsureTrafficLightButtonExists();
-
         foreach (TileSetCell cell in tileSetCells)
         {
             cell.AddSelectedListener(OnTileSetSelected);
@@ -46,49 +44,6 @@ public class TileSetController : MonoBehaviour
         delButton.onClick.AddListener(OnDelClicked);
 
         controlInput.AddRightMouseClickListener(OnRotateClicked);
-    }
-
-    void EnsureTrafficLightButtonExists()
-    {
-        bool isSignController = false;
-        bool hasTrafficLight = false;
-
-        foreach (TileSetCell cell in tileSetCells)
-        {
-            if (cell != null)
-            {
-                if ((cell.TileId >= 0 && cell.TileId <= 5) || cell.TileId == 999)
-                {
-                    isSignController = true;
-                }
-                if (cell.TileId == (int)TrafficSignType.S06_Traffic_Light)
-                {
-                    hasTrafficLight = true;
-                }
-            }
-        }
-
-        if (isSignController && !hasTrafficLight && tileSetCells.Count > 0)
-        {
-            TileSetCell templateCell = tileSetCells[0];
-            GameObject newCellGo = Instantiate(templateCell.gameObject, templateCell.transform.parent);
-            newCellGo.name = "S06_TrafficLight";
-            TileSetCell newCell = newCellGo.GetComponent<TileSetCell>();
-
-            Sprite tlSprite = null;
-            Sprite[] allSprites = Resources.FindObjectsOfTypeAll<Sprite>();
-            foreach (var s in allSprites)
-            {
-                if (s != null && (s.name.Contains("s06") || s.name.Contains("traffic_light")))
-                {
-                    tlSprite = s;
-                    break;
-                }
-            }
-
-            newCell.SetSignId(TrafficSignType.S06_Traffic_Light, tlSprite);
-            tileSetCells.Add(newCell);
-        }
     }
 
     private void Update()
