@@ -55,6 +55,23 @@ public class WorldTrafficLight : MonoBehaviour
 
     private void Update()
     {
+        // Phím tắt đổi màu đèn ngay lập tức: 1 = Xanh, 2 = Vàng, 3 = Đỏ
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            SetState(LightState.Green);
+            return;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            SetState(LightState.Yellow);
+            return;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            SetState(LightState.Red);
+            return;
+        }
+
         timeRemaining -= Time.deltaTime;
 
         if (timeRemaining <= 0f)

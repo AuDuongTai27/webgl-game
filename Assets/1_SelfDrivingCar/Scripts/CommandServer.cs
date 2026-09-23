@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using UnityStandardAssets.Vehicles.Car;
@@ -116,7 +116,10 @@ public class CommandServer : MonoBehaviour
 	void Update()
 	{
 		#if !UNITY_WEBGL || UNITY_EDITOR
-			_webSocket.DispatchMessageQueue();
+			if (_webSocket != null)
+			{
+				_webSocket.DispatchMessageQueue();
+			}
 		#endif
 		EmitTelemetry();
 	}
