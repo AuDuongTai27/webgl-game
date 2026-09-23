@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -134,6 +134,20 @@ public class MapObjectLayerGenerator : MonoBehaviour
                 Debug.LogWarning("NOT Found sign obj, create new");
                 TrafficSignRes res = ResourceOfSign(pointerSignId);
                 signObject = Instantiate(res.trafficSignPrefab, signRoot);
+                if (pointerSignId == (int)TrafficSignType.S06_Traffic_Light)
+                {
+                    Sprite tlSprite = null;
+                    Sprite[] allSprites = Resources.FindObjectsOfTypeAll<Sprite>();
+                    foreach (var s in allSprites)
+                    {
+                        if (s != null && (s.name.Contains("s06") || s.name.Contains("traffic_light")))
+                        {
+                            tlSprite = s;
+                            break;
+                        }
+                    }
+                    signObject.SetSignType(TrafficSignType.S06_Traffic_Light, tlSprite);
+                }
                 if (signObject.SignType == TrafficSignType.S99_Score)
                 {
                     roadCheckpoints.Add(signObject);

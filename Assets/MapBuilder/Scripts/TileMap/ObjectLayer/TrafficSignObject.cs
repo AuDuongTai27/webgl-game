@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,5 +49,14 @@ public class TrafficSignObject : MonoBehaviour
     public void OnUnSelect()
     {
         selectButton.gameObject.SetActive(true);
+    }
+
+    public void SetSignType(TrafficSignType newType, Sprite newSprite = null)
+    {
+        this.type = newType;
+        if (newSprite != null && iconImage != null)
+        {
+            iconImage.sprite = newSprite;
+        }
     }
 }

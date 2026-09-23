@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -98,4 +98,14 @@ public class TileSetCell : MonoBehaviour
     }
 
     public int TileId => (type == CellType.TileMap) ? (int)cellId : (int)signId;
+
+    public void SetSignId(TrafficSignType pSignId, Sprite pSprite = null)
+    {
+        this.type = CellType.Sign;
+        this.signId = pSignId;
+        if (pSprite != null && iconImage != null)
+        {
+            iconImage.sprite = pSprite;
+        }
+    }
 }

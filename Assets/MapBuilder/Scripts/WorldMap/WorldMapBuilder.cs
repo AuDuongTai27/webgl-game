@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -167,13 +167,27 @@ public class WorldMapBuilder : MonoBehaviour
         for (int i = 0; i < signDatas.Count; i++)
         {
             var signData = signDatas[i];
+            if (signData.sign_id == (int)TrafficSignType.S06_Traffic_Light)
+            {
+                GameObject trafficLightGo = new GameObject("WorldTrafficLight_" + i);
+                trafficLightGo.transform.SetParent(signRoot, false);
+                trafficLightGo.transform.localPosition = new Vector3(signData.pos.x * cellSize, 0, signData.pos.y * cellSize);
+                trafficLightGo.transform.localRotation = Quaternion.Euler(0, -signData.rot, 0);
+                trafficLightGo.transform.localScale = Vector3.one;
+                trafficLightGo.AddComponent<WorldTrafficLight>();
+                continue;
+            }
+
             var signModel = SignModelOf(signData.sign_id);
-            WorldTrafficSign worldTrafficSign = Instantiate(signModel.prefab, signRoot);
-            Transform signTrans = worldTrafficSign.transform;
-            signTrans.transform.localPosition = new Vector3(signData.pos.x * cellSize, 0, signData.pos.y * cellSize);
-            signTrans.transform.localRotation = Quaternion.Euler(0, -signData.rot, 0);
-            signTrans.transform.localScale = Vector3.one;
-            listSigns.Add(worldTrafficSign);
+            if (signModel != null && signModel.prefab != null)
+            {
+                WorldTrafficSign worldTrafficSign = Instantiate(signModel.prefab, signRoot);
+                Transform signTrans = worldTrafficSign.transform;
+                signTrans.transform.localPosition = new Vector3(signData.pos.x * cellSize, 0, signData.pos.y * cellSize);
+                signTrans.transform.localRotation = Quaternion.Euler(0, -signData.rot, 0);
+                signTrans.transform.localScale = Vector3.one;
+                listSigns.Add(worldTrafficSign);
+            }
         }
     }
 

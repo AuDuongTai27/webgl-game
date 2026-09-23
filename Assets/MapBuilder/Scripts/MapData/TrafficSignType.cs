@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,5 +15,8 @@ public enum TrafficSignType
     S04_Stop = 4,
     S05_Straight = 5,
 
+    S06_Traffic_Light = 6,
+
     S99_Score = 999,
 }
+
