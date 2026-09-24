@@ -1,0 +1,29 @@
+name: Deploy WebGL to Itch.io
+
+on:
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      - 'Build_Web/**'
+      - '.github/workflows/deploy-itch.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to Itch.io
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to Itch.io via Butler
+        uses: JosephMcA/butler-publish-itchio-action@v1.0.3
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: html5
+          ITCH_GAME: via-simulation-jeep
+          ITCH_USER: taiau
+          PACKAGE: Build_Web

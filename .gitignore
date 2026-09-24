@@ -1,6 +1,7 @@
  # Unity generated
-Builds/
-Build/
+/Builds/
+/Build/
+!Build_Web/Build/
 Temp/
 Library/
 obj/
