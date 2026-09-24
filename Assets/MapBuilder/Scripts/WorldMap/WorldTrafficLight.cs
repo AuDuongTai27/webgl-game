@@ -212,17 +212,17 @@ public class WorldTrafficLight : MonoBehaviour
         GameObject basePlate = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         basePlate.name = "Pole_BasePlate";
         basePlate.transform.SetParent(transform, false);
-        basePlate.transform.localPosition = new Vector3(0, 0.08f, 0);
-        basePlate.transform.localScale = new Vector3(0.55f, 0.08f, 0.55f);
+        basePlate.transform.localPosition = new Vector3(0, 0.05f, 0);
+        basePlate.transform.localScale = new Vector3(0.45f, 0.05f, 0.45f);
         Renderer baseRen = basePlate.GetComponent<Renderer>();
         if (baseRen != null) baseRen.sharedMaterial = poleMat;
 
-        // 2. Vertical Pole
+        // 2. Vertical Pole (Adjusted height to match traffic sign pole)
         GameObject pole = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         pole.name = "Pole_Body";
         pole.transform.SetParent(transform, false);
-        pole.transform.localPosition = new Vector3(0, 1.45f, 0);
-        pole.transform.localScale = new Vector3(0.14f, 1.45f, 0.14f);
+        pole.transform.localPosition = new Vector3(0, 1.10f, 0);
+        pole.transform.localScale = new Vector3(0.12f, 1.10f, 0.12f);
         Renderer poleRen = pole.GetComponent<Renderer>();
         if (poleRen != null) poleRen.sharedMaterial = poleMat;
 
@@ -230,22 +230,22 @@ public class WorldTrafficLight : MonoBehaviour
         GameObject bracket = GameObject.CreatePrimitive(PrimitiveType.Cube);
         bracket.name = "Mount_Bracket";
         bracket.transform.SetParent(transform, false);
-        bracket.transform.localPosition = new Vector3(0, 3.2f, 0);
-        bracket.transform.localScale = new Vector3(0.25f, 0.12f, 0.55f);
+        bracket.transform.localPosition = new Vector3(0, 2.30f, 0);
+        bracket.transform.localScale = new Vector3(0.20f, 0.10f, 0.45f);
         Renderer bracketRen = bracket.GetComponent<Renderer>();
         if (bracketRen != null) bracketRen.sharedMaterial = poleMat;
 
-        // 4. Housing Parent Root
+        // 4. Housing Parent Root (Center at Y = 2.30 to match WorldTrafficSign center Y = 2.42)
         GameObject housingRoot = new GameObject("TrafficLight_Housing");
         housingRoot.transform.SetParent(transform, false);
-        housingRoot.transform.localPosition = new Vector3(0, 3.2f, 0);
+        housingRoot.transform.localPosition = new Vector3(0, 2.30f, 0);
 
         // 4a. Yellow Reflective Backplate Border
         GameObject yellowBorder = GameObject.CreatePrimitive(PrimitiveType.Cube);
         yellowBorder.name = "Backplate_YellowBorder";
         yellowBorder.transform.SetParent(housingRoot.transform, false);
         yellowBorder.transform.localPosition = Vector3.zero;
-        yellowBorder.transform.localScale = new Vector3(0.72f, 1.62f, 0.40f);
+        yellowBorder.transform.localScale = new Vector3(0.58f, 1.30f, 0.32f);
         Renderer borderRen = yellowBorder.GetComponent<Renderer>();
         if (borderRen != null) borderRen.sharedMaterial = yellowBorderMat;
 
@@ -254,7 +254,7 @@ public class WorldTrafficLight : MonoBehaviour
         blackShield.name = "Backplate_BlackShield";
         blackShield.transform.SetParent(housingRoot.transform, false);
         blackShield.transform.localPosition = Vector3.zero;
-        blackShield.transform.localScale = new Vector3(0.64f, 1.54f, 0.42f);
+        blackShield.transform.localScale = new Vector3(0.52f, 1.24f, 0.34f);
         Renderer shieldRen = blackShield.GetComponent<Renderer>();
         if (shieldRen != null) shieldRen.sharedMaterial = housingMat;
 
@@ -263,13 +263,13 @@ public class WorldTrafficLight : MonoBehaviour
         mainBox.name = "Housing_Box";
         mainBox.transform.SetParent(housingRoot.transform, false);
         mainBox.transform.localPosition = Vector3.zero;
-        mainBox.transform.localScale = new Vector3(0.52f, 1.42f, 0.46f);
+        mainBox.transform.localScale = new Vector3(0.42f, 1.15f, 0.38f);
         Renderer boxRen = mainBox.GetComponent<Renderer>();
         if (boxRen != null) boxRen.sharedMaterial = housingMat;
 
         // 5. Lamps on BOTH Front (+Z) and Back (-Z)
         // This ensures the lights are ALWAYS clearly visible, even if the player or camera views it from any angle!
-        float[] yPositions = new float[] { 0.44f, 0.0f, -0.44f }; // Top=Red, Mid=Yellow, Bot=Green
+        float[] yPositions = new float[] { 0.36f, 0.0f, -0.36f }; // Top=Red, Mid=Yellow, Bot=Green
         float[] zDirections = new float[] { 1.0f, -1.0f };         // +Z (Front), -Z (Back)
 
         redLampRenderers.Clear();
@@ -299,8 +299,8 @@ public class WorldTrafficLight : MonoBehaviour
         lightObj.transform.localPosition = new Vector3(0, 0, 0);
         spotOrPointLight = lightObj.AddComponent<Light>();
         spotOrPointLight.type = LightType.Point;
-        spotOrPointLight.range = 8.0f;
-        spotOrPointLight.intensity = 2.0f;
+        spotOrPointLight.range = 6.0f;
+        spotOrPointLight.intensity = 1.8f;
     }
 
     private Renderer CreateLampAssembly(Transform parent, string lampName, float yPos, float zDir, Material visorMat)
