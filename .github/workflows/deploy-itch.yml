@@ -19,12 +19,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Deploy to Itch.io via Butler
-        uses: Oval-Tutu/publish-to-itch-with-butler@v1.1.2
-        with:
-          api-key: ${{ secrets.BUTLER_API_KEY }}
-          channel: html5
-          itch_game: via-simulation-jeep
-          itch_user: taiau
-          package: ./Build_Web
-          version: ${{ github.sha }}
+      - name: Install Butler (Official CLI)
+        run: |
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          unzip -q butler.zip -d bin/
+          chmod +x bin/butler
+          echo "$PWD/bin" >> $GITHUB_PATH
+
+      - name: Verify Butler
+        run: butler -V
+
+      - name: Deploy to Itch.io
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+        run: |
+          butler push Build_Web taiau/via-simulation-jeep:html5 --userversion ${{ github.sha }}
